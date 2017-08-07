@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhy.mapper.studentMapper">
+	<!-- 映射学生对象的resultMap: -->
+	<resultMap type="com.zhy.model.Student" id="studentResultMap">
+		<id property="id" column="s_id"/>
+		<result property="name" column="s_name"/>
+		<result property="sex" column="s_sex"/>
+		<result property="age" column="s_age"/>
+		<!-- 关联映射 -->
+		<association property="clazz" column="class_id" javaType="com.zhy.model.Class"
+		 select="selectClassById">
+		</association>
+	</resultMap>
+	<!-- 根据班级id查询班级 -->
+	<select id="selectClassById" resultType="com.zhy.model.Class">
+		select * from tb_class where id=#{id}
+	</select>
+	<!-- 查询所有学生信息 -->
+	<select id="selectStudent" resultMap="studentResultMap">
+		select * from tb_student
+	</select>
+	<!-- 映射班级对象的resultMap： -->
+	<resultMap type="com.zhy.model.Class" id="classResultMap">
+		<id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<!-- 班级的学生属性，因为一个班级有多个学生，所以该属性是一个集合 -->
+		<collection property="students" javaType="arraylist" column="id" ofType="com.zhy.model.Student"
+		 select="selectStudentById"></collection>
+	</resultMap>
+	<!-- 根据班级id查询学生 -->
+	<select id="selectStudentById" resultType="com.zhy.model.Student">
+		select * from tb_student where class_id=#{id}
+	</select>
+	<!-- 查询所有班级信息 -->
+	<select id="selectClass" resultMap="classResultMap">
+		select * from tb_class
+	</select>
+</mapper>

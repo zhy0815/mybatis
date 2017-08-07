@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhy.mapper.CategoryMapper">
+	<resultMap type="com.zhy.model.Category" id="categoryResultMap">
+		<id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<collection property="books" javaType="arraylist" column="id" ofType="com.zhy.model.Book" 
+		select="com.zhy.mapper.BookMapper.selectBookByCategoryId" fetchType="lazy">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="author" column="author"/>
+			<result property="price" column="price"/>
+		</collection>
+	</resultMap>
+	<select id="selectCategoryById" parameterType="int" resultMap="categoryResultMap">
+		select * from tb_category where id=#{id}
+	</select>
+</mapper>

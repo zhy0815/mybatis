@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhy.mapper.CustomerMapper">
+	<resultMap type="com.zhy.model.Customer" id="customerResultMapper">
+		<id property="id" column="id"/>
+		<result property="username" column="username"/>
+		<result property="loginname" column="loginname"/>
+		<result property="password" column="password"/>
+		<result property="phone" column="phone"/>
+		<result property="address" column="address"/>
+		<collection property="orders" javaType="arraylist" column="id" ofType="com.zhy.model.Customer" 
+		select="com.zhy.mapper.OrderMapper.selectOrderByCustomerId" fetchType="lazy">
+			<id property="id" column="id"/>
+			<result property="code" column="code"/>
+			<result property="total" column="total"/>
+		</collection>
+	</resultMap>
+	<select id="selectCustomerById" parameterType="int" resultMap="customerResultMapper">
+		select * from tb_customer where id=#{id}
+	</select>
+</mapper>
