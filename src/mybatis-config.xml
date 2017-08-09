@@ -42,5 +42,6 @@
   		<mapper resource="com/zhy/mapper/CustomerMapper.xml"/>
   		<mapper resource="com/zhy/mapper/ArticleMapper.xml"/>
   		<mapper resource="com/zhy/mapper/EmployeeMapper.xml"/>
+  		<mapper class="com.zhy.mapper.UserMapper"/>
   	</mappers>
   </configuration>
