@@ -1,7 +1,7 @@
 package com.zhy.model;
 
 import java.util.List;
-
+//文章类
 public class Article {
 	private Integer id;		// 商品id，主键
 	private String name;	// 商品名称
